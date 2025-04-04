@@ -20,13 +20,13 @@ app.use(
     })
   );
 
-// ✅ Register routes correctly
+//Register routes correctly
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/admin",adminRoutes);
 
-// ✅ Error handling middleware
+//Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 

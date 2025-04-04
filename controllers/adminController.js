@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-// ✅ Get all users (Admin only)
+//Get all users (Admin only)
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // Exclude passwords
@@ -10,7 +10,7 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-// ✅ Update user role (Admin only)
+//Update user role (Admin only)
 export const updateUserRole = async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
@@ -30,7 +30,7 @@ export const updateUserRole = async (req, res) => {
   }
 };
 
-// ✅ Delete user (Admin only)
+// Delete user (Admin only)
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 

@@ -10,19 +10,19 @@ import { protect, admin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// 🟢 Create Task (Auth Required)
+//Create Task (Auth Required)
 router.post("/", protect, createTask);
 
-// 🔵 Get All Tasks (With Pagination & Filters)
+// Get All Tasks (With Pagination & Filters)
 router.get("/", protect, getTasks);
 
-// 🟡 Get Single Task by ID
+// Get Single Task by ID
 router.get("/:id", protect, getTaskById);
 
-// 🟠 Update Task (Only Creator or Admin)
+// Update Task (Only Creator or Admin)
 router.put("/:id", protect,admin, updateTask);
 
-// 🔴 Delete Task (Only Creator or Admin)
+//Delete Task (Only Creator or Admin)
 router.delete("/:id", protect,admin, deleteTask);
 
 export default router;

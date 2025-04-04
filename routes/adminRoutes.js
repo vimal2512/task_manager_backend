@@ -5,13 +5,13 @@ import { protect, admin } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 
-// ✅ Get all users (Admin only)
+//Get all users (Admin only)
 router.get("/users", protect, admin, getAllUsers);
 
-// ✅ Update user role (Admin only)
+//Update user role (Admin only)
 router.put("/users/:id", protect, admin, updateUserRole);
 
-// ✅ Delete user (Admin only)
+// Delete user (Admin only)
 router.delete("/users/:id", protect, admin, deleteUser);
 
 export default router;
