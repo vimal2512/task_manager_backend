@@ -76,6 +76,7 @@ export const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        isAdmin: user.role === "admin"
       },
       accessToken,
       refreshToken,

@@ -140,3 +140,24 @@ export const deleteTask = async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 };
+
+// Get tasks assigned to the currently logged-in user
+export const getAssignedTasks = async (req, res) => {
+  try {
+    let tasks;
+
+    if (req.user.role === "admin") {
+      // Show tasks created by admin
+      tasks = await Task.find({ createdBy: req.user._id });
+    } else {
+      // Show tasks assigned to the user
+      tasks = await Task.find({ assignedTo: req.user._id });
+    }
+
+    res.status(200).json(tasks);
+  } catch (err) {
+    console.error("Error fetching assigned tasks:", err);
+    res.status(500).json({ message: "Failed to fetch assigned tasks" });
+  }
+};
+

@@ -5,6 +5,7 @@ import {
   getTaskById,
   updateTask,
   deleteTask,
+  getAssignedTasks
 } from "../controllers/taskController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -15,6 +16,10 @@ router.post("/", protect, createTask);
 
 // Get All Tasks (With Pagination & Filters)
 router.get("/", protect, getTasks);
+
+// Get tasks assigned to the current user
+router.get("/user/assigned", protect, getAssignedTasks);
+
 
 // Get Single Task by ID
 router.get("/:id", protect, getTaskById);
