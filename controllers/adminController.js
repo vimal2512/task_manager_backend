@@ -45,3 +45,21 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+// GET /admin/users/:id/tasks
+export const getTasksByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // Optionally: check if user exists before fetching tasks
+
+    const tasks = await Task.find({ assignedTo: userId }); // or `user: userId` based on your schema
+    res.status(200).json(tasks);
+  } catch (err) {
+    console.error("Error fetching tasks by user:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+

@@ -87,26 +87,55 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// Refresh Access Token
+// controllers/authController.js
+let isRefreshing = false; // Global variable to prevent multiple refresh calls
+
 export const refreshAccessToken = async (req, res) => {
+  if (isRefreshing) {
+    return res.status(429).json({ message: "Refresh already in progress" });
+  }
+
+  isRefreshing = true;
+
   try {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
+      isRefreshing = false;
       return res.status(400).json({ message: "Refresh token is required" });
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
-    const user = await User.findById(decoded.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    // Verify Refresh Token
+    jwt.verify(refreshToken, process.env.REFRESH_SECRET, async (err, decoded) => {
+      if (err) {
+        isRefreshing = false;
+        return res.status(401).json({ message: "Invalid or expired refresh token" });
+      }
 
-    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        isRefreshing = false;
+        return res.status(404).json({ message: "User not found" });
+      }
 
-    res.json({ accessToken });
+      // Generate a new Access Token
+      const accessToken = jwt.sign(
+        { id: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      isRefreshing = false;
+      return res.status(200).json({ accessToken });
+    });
+
   } catch (error) {
-    res.status(401).json({ message: "Invalid or expired refresh token" });
+    isRefreshing = false;
+    console.error("Refresh Token Error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 // Get Logged-in User
 export const getMe = async (req, res) => {

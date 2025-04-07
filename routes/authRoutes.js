@@ -8,6 +8,8 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/me", protect, getMe);
+console.log("🔁 Refresh route hit at", new Date().toISOString());
+
 router.post("/refresh",refreshAccessToken);
 router.post("/logout",logout);
 

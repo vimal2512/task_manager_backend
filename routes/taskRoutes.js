@@ -19,7 +19,7 @@ router.get("/", protect, getTasks);
 
 // Get tasks assigned to the current user
 router.get("/user/assigned", protect, getAssignedTasks);
-
+console.log("GET /tasks/:id hit", getTaskById);
 
 // Get Single Task by ID
 router.get("/:id", protect, getTaskById);
