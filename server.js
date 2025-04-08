@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parses form data
 app.use(
     cors({
-      origin: "http://localhost:3003", // Allow frontend origin
+      origin: "http://localhost:3001", // Allow frontend origin
       credentials: true, // Allow cookies/auth headers
     })
   );
