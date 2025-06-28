@@ -25,6 +25,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/admin",adminRoutes);
+app.use("/api/google",userRoutes);
+app.use("/api/meta",adminRoutes);
+
 
 //Error handling middleware
 app.use(notFound);
